@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		.w360 {
+			width: 360px;
+		}
+	</style>
+	<script>
+		((w) => {
+			const $v = w.document.querySelectorAll('video');
+			$v.forEach((elm) => {
+				elm.addEventListener('loadeddata', (ev) => {
+					const t = ev.currentTarget;
+					setTimeout(() => {
+						console.log(t);
+						t.muted = false;
+
+					}, 1000);
+				});
+			});
+
+			const $a1 = w.document.getElementById('a1');
+			const $a2 = w.document.getElementById('a2');
+		})(window);
+		window.addEventListener('load', (ev) => {
+			const $a1 = window.document.getElementById('a1');
+			console.log($a1);
+			$a1.addEventListener('canplay', () => {
+				$a1.play().then((v) => {
+					console.log(v);
+				}).catch((e) => {
+					console.log(e);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+<div>
+	<video class="w360" autoplay controls>
+		<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+	</video>
+	<video class="w360" autoplay controls muted>
+		<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+	</video>
+</div>
+<div>
+	<audio id="a1" controls autoplay>
+		<source src="warning1.mp3">
+	</audio>
+	<audio id="a2" controls autoplay muted>
+		<source src="warning1.mp3">
+	</audio>
+</div>
+<div>
+	<iframe allow="autoplay; fullscreen" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></iframe>
+</div>
+<div>
+	<iframe allow="autoplay" src="warning1.mp3"></iframe>
+</div>
+</body>
+</html>
